@@ -1,6 +1,19 @@
 <h1>id: <%= @task.id %>のタスク</h1>
-<p><%= @task.status%></p>
-<p><%= @task.content%></p>
-<p><%= link_to '一覧へ',tasks_path %></p>
-<p><%= link_to '修正する',edit_task_path %></p>
-<%= link_to '削除する', @task, method: :delete, data: { confirm: '削除していい？' } %>
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <td><%= @task.id%></td>
+    </tr>
+    <tr>
+        <th>重要度</th>
+        <td><%= @task.status%></td>
+    </tr>
+    <tr>
+        <th>タスク内容</th>
+        <td><%= @task.content%></td>
+    </tr>
+</table>
+
+<p><%= link_to '一覧へ',tasks_path , class: "btn btn-primary"%></p>
+<p><%= link_to '修正する',edit_task_path , class: "btn btn-primary"%></p>
+<%= link_to '削除する', @task, method: :delete, data: { confirm: '削除していい？' } , class: "btn btn-primary" %>
