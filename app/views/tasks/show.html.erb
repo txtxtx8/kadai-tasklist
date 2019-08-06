@@ -1,6 +1,8 @@
 <h1>id: <%= @task.id %>のタスク</h1>
 <table class="table table-bordered">
     <tr>
+        <th>種類</th>
+        <td><%= @task.status%></td>
         <th>タスク内容</th>
         <td><%= @task.content %></td>
     </tr>
