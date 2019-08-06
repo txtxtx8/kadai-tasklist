@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-    before_action :require_user_logged_in, only: [:index, :show]
+    before_action :require_user_logged_in
 
     def index
         if logged_in?
@@ -18,19 +18,18 @@ class TasksController < ApplicationController
     end
     def new
         if logged_in?
-            @task = Task.new
-            @task.user = current_user
+            @task = current_user.tasks.new
         end
     end
     def edit
-       @task = Task.find(params[:id])
+       @task = current_user.tasks.find(params[:id])
     end
     def show
-       @task = Task.find(params[:id])
+       @task = current_user.tasks.find(params[:id])
     end
     
     def update
-        @task = Task.find(params[:id])
+        @task = current_user.tasks.find(params[:id])
     
         if @task.update(task_params)
           flash[:success] = 'タスク修正完了'
@@ -41,7 +40,7 @@ class TasksController < ApplicationController
         end
     end
     def destroy
-        @task = Task.find(params[:id])
+        @task = current_user.tasks.find(params[:id])
         @task.destroy
         
         flash[:success] = 'タスクを削除しました'
