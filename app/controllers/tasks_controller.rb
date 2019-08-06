@@ -1,9 +1,13 @@
 class TasksController < ApplicationController
+    before_action :require_user_logged_in, only: [:index, :show]
+
     def index
-        @tasks = Task.all.page(params[:page]).per(5)
+        if logged_in?
+            @tasks = current_user.tasks.order(id: :desc).page(params[:page])
+        end
     end
     def create
-        @task = Task.new(task_params)
+        @task = current_user.tasks.build(task_params)
         if @task.save
             flash[:success] = 'タスクが追加されました'
             redirect_to @task
@@ -13,14 +17,18 @@ class TasksController < ApplicationController
         end
     end
     def new
-        @task = Task.new
+        if logged_in?
+            @task = Task.new
+            @task.user = current_user
+        end
     end
     def edit
-        @task = Task.find(params[:id])
+       @task = Task.find(params[:id])
     end
     def show
-        @task = Task.find(params[:id])
+       @task = Task.find(params[:id])
     end
+    
     def update
         @task = Task.find(params[:id])
     
@@ -44,6 +52,8 @@ class TasksController < ApplicationController
     
 
     def task_params
-    params.require(:task).permit(:content,:status)
+        params.require(:task).permit(:content,:status)
     end
+    
+    
 end
