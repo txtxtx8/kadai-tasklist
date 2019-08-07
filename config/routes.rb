@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'tasks#index'
-  resources :tasks
-  post 'tasks.new', to: 'tasks#create'
   
-  resources :users,only: [:index, :show, :new, :create]
+  resources :tasks
+  
+  resources :users,only: [:new, :create]
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
   

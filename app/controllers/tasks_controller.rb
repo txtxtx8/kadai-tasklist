@@ -17,21 +17,20 @@ class TasksController < ApplicationController
             render :new
         end
     end
+    
     def new
-        if logged_in?
-            @task = current_user.tasks.new
-        end
+      if logged_in?
+        @task = current_user.tasks.new
+      end
     end
+    
     def edit
-       @task = current_user.tasks.find(params[:id])
     end
+    
     def show
-       @task = current_user.tasks.find(params[:id])
     end
     
     def update
-        @task = current_user.tasks.find(params[:id])
-    
         if @task.update(task_params)
           flash[:success] = 'タスク修正完了'
           redirect_to @task
@@ -40,10 +39,9 @@ class TasksController < ApplicationController
           render :edit
         end
     end
+    
     def destroy
-        @task = current_user.tasks.find(params[:id])
         @task.destroy
-        
         flash[:success] = 'タスクを削除しました'
         redirect_to tasks_url
     end
@@ -57,8 +55,8 @@ class TasksController < ApplicationController
     
     def correct_user
      @task = current_user.tasks.find_by(id: params[:id])
-        unless @task
-          redirect_to root_url
-        end
+      unless @task
+        redirect_to root_url
+      end
     end
 end
